@@ -4,6 +4,7 @@
  * External dependencies
  */
 import deepFreeze from 'deep-freeze';
+import { cloneDeepWith } from 'lodash';
 
 export const queryManagerSchema = deepFreeze( {
 	additionalProperties: false,
@@ -47,5 +48,20 @@ export const queryManagerSchema = deepFreeze( {
 		},
 	},
 } );
+
+/**
+ * Get a queryManagerSchema with a customized items schema
+ *
+ * @param  {Object} itemSchema Schema that will be used for the items
+ * @return {Object}            Customized schema
+ */
+export function withItemSchema( itemSchema ) {
+	return cloneDeepWith( queryManagerSchema, value => {
+		if ( value === queryManagerSchema.properties.data.properties.items ) {
+			return itemSchema;
+		}
+		return value;
+	} );
+}
 
 export default queryManagerSchema;
