@@ -6648,7 +6648,6 @@
     "gzip-size": {
       "version": "4.1.0",
       "integrity": "sha1-iuCWJX6r59acRb4rZ8RIEk/7UXw=",
-      "dev": true,
       "requires": {
         "duplexer": "0.1.1",
         "pify": "3.0.0"
