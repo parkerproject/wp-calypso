@@ -1,4 +1,10 @@
 /** @format */
+
+/**
+ * Internal dependencies
+ */
+import { withItemSchema } from 'lib/query-manager/schema';
+
 const themeSchema = {
 	title: 'Theme',
 	type: 'object',
@@ -17,6 +23,8 @@ const themeSchema = {
 	required: [ 'id', 'name', 'author', 'screenshot' ],
 };
 
+const themeQueryManagerSchema = withItemSchema( themeSchema );
+
 export const queriesSchema = {
 	type: 'object',
 	properties: {
@@ -24,51 +32,7 @@ export const queriesSchema = {
 	},
 	patternProperties: {
 		// Site ID
-		'^(wpcom|wporg|\\d+)$': {
-			type: 'object',
-			properties: {
-				data: {
-					type: 'object',
-					required: [ 'items', 'queries' ],
-					properties: {
-						items: {
-							description: 'Themes, keyed by ID',
-							type: 'object',
-							patternProperties: {
-								'^\\w+$': themeSchema,
-							},
-						},
-						queries: {
-							patternProperties: {
-								// Query key pairs
-								'^\\[.*\\]$': {
-									type: 'object',
-									required: [ 'itemKeys' ],
-									properties: {
-										itemKeys: {
-											type: 'array',
-										},
-										found: {
-											type: 'number',
-										},
-									},
-								},
-							},
-							additionalProperties: false,
-						},
-					},
-				},
-				options: {
-					type: 'object',
-					required: [ 'itemKey' ],
-					properties: {
-						itemKey: {
-							type: 'string',
-						},
-					},
-				},
-			},
-		},
+		'^(wpcom|wporg|\\d+)$': themeQueryManagerSchema,
 	},
 	additionalProperties: false,
 };
