@@ -1,4 +1,10 @@
 /** @format */
+
+/**
+ * Internal dependencies
+ */
+import { withItemSchema } from 'lib/query-manager/schema';
+
 const activityItemSchema = {
 	type: 'object',
 	required: [
@@ -38,57 +44,4 @@ const activityItemSchema = {
 	},
 };
 
-export const logItemsSchema = {
-	type: 'object',
-	additionalProperties: false,
-	properties: {
-		data: {
-			type: 'object',
-			additionalProperties: false,
-			required: [ 'items', 'queries' ],
-			properties: {
-				items: {
-					patternProperties: {
-						'^.+$': activityItemSchema,
-					},
-				},
-				queries: {
-					type: 'object',
-					additionalProperties: false,
-					patternProperties: {
-						// Query key pairs
-						'^\\[.*\\]$': {
-							type: 'object',
-							additionalProperties: false,
-							required: [ 'itemKeys' ],
-							properties: {
-								itemKeys: {
-									type: 'array',
-									items: {
-										type: 'string',
-									},
-								},
-								found: {
-									type: 'integer',
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-		options: {
-			type: 'object',
-			additionalProperties: false,
-			required: [ 'itemKey' ],
-			properties: {
-				itemKey: {
-					type: 'string',
-				},
-			},
-		},
-		oldestItemTs: {
-			type: [ 'null', 'integer' ],
-		},
-	},
-};
+export const logItemsSchema = withItemSchema( activityItemSchema );
