@@ -17,11 +17,11 @@ export const queryManagerSchema = deepFreeze( {
 			properties: {
 				items: { type: 'object' },
 				queries: {
+					additionalProperties: false,
 					type: 'object',
 					patternProperties: {
 						// Stringified query objects are the keys
 						'^\\[.*\\]$': {
-							additionalProperties: false,
 							required: [ 'itemKeys' ],
 							type: 'object',
 							properties: {
