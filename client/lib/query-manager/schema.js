@@ -27,7 +27,7 @@ export const queryManagerSchema = deepFreeze( {
 							properties: {
 								itemKeys: {
 									type: 'array',
-									items: { type: 'string' },
+									items: { type: [ 'string', 'integer' ] },
 								},
 								found: {
 									type: 'integer',
